@@ -36,7 +36,18 @@ export default {
         this.catUrl = parse(response.body).root.children['0'].children['0'].children['0'].children['0'].content
       })
   },
-  methods: {}
+  methods: {
+    postCat () {
+      this.$root.$firebaseRefs.cat
+        .push({
+          url: this.catUrl,
+          comment: this.title,
+          info: 'Posted by Charles on Tuesday',
+          created_at: -1 * new Date().getTime()
+        })
+        .then(this.$router.push('/'))
+    }
+  }
 }
 </script>
 <style scoped>
