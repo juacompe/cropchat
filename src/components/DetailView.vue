@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { find } from 'lodash'
+import Cats from '@/models/Cats'
 export default {
   data () {
     return {
@@ -30,7 +30,9 @@ export default {
     }
   },
   mounted () {
-    this.cat = find(this.$root.cat, (cat) => cat['.key'] === this.$route.params.id)
+    let catId = this.$route.params.id
+    let cats = new Cats(this.$root.cat)
+    this.cat = cats.get(catId)
   }
 }
 </script>

@@ -3,7 +3,7 @@
     <div id="cat-list" class="mdl-grid">
       <div class="mdl-cell mdl-cell--3-col mdl-cell mdl-cell--1-col-tablet mdl-cell--hide-phone"></div>
       <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-phone">
-        <div v-for="picture in this.$root.cat" class="image-card" @click="displayDetails(picture['.key'])">
+        <div v-for="picture in cats()" class="image-card" @click="displayDetails(picture['.key'])">
           <div class="image-card__picture">
             <img :src="picture.url" />
           </div>
@@ -20,10 +20,14 @@
 </template>
 
 <script>
+import Cats from '@/models/Cats'
 export default {
   methods: {
     displayDetails (id) {
       this.$router.push({ name: 'detail', params: { id: id } })
+    },
+    cats () {
+      return new Cats(this.$root.cat).list
     }
   }
 }
