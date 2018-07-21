@@ -26,7 +26,8 @@ import parse from 'xml-parser'
 export default {
   data () {
     return {
-      catUrl: null
+      catUrl: null,
+      title: ''
     }
   },
   mounted () {
