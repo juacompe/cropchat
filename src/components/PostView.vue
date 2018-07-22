@@ -3,12 +3,12 @@
     <div class="mdl-grid">
       <div class="mdl-cell mdl-cell--8-col">
         <div class="card-image__picture">
-          <img :src="this.catUrl"/>
+          <img :src="this.presenter.catUrl"/>
         </div>
       </div>
       <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded is-dirty">
-          <input id="username" v-model="title" type="text" class="mdl-textfield__input"/>
+          <input id="username" v-model="presenter.title" type="text" class="mdl-textfield__input"/>
           <label for="username" class="mdl-textfield__label">Describe me</label>
         </div>
         <div class="actions">
@@ -22,26 +22,19 @@
 </template>
 
 <script>
-import CatAPI from '@/service/catapi'
+import Presenter from '@/presenters/postpresenter'
 export default {
   data () {
     return {
-      catUrl: null,
-      title: ''
+      presenter: new Presenter(this)
     }
   },
   mounted () {
-    CatAPI.getRandomCatUrl(this.$http)
-      .then(url => { this.catUrl = url })
+    this.presenter.init()
   },
   methods: {
     postCat () {
-      this.pushNewCat({
-        url: this.catUrl,
-        comment: this.title,
-        info: 'Posted by Charles on Tuesday',
-        created_at: -1 * new Date().getTime()
-      }).then(this.backToHome)
+      this.presenter.postCat()
     },
     pushNewCat (newCat) {
       return this.$root.$firebaseRefs.cat.push(newCat)
